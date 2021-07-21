@@ -12,15 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/* guset */
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.welcome');
 });
 
-/* Auth::routes(); */
+Route::resource('posts', PostController::class)->only('index', 'show');
 
+Auth::routes(); 
+
+/* admin */
 Route::get('/admin', 'HomeController@index')->name('home');
 
  Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function (){
     Route::get('/', 'HomeController@index')->name('index');
+    Route::resource('posts', PostController::class);
 });  
