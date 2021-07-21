@@ -22,7 +22,6 @@ class CreatePostsTable extends Migration
             $table->string('argument');
             $table->string('author');
 
-            
             $table->timestamps();
         });
     }
