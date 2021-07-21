@@ -15,8 +15,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('admin.posts.index', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.
