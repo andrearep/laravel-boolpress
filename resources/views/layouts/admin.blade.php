@@ -11,14 +11,14 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/admin.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -76,8 +76,37 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
+        <main class="py-4 d-flex">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <aside>
+                            <ul class="nav flex-column">
+                                <li class="nav-item nav-pills">
+                                    <a class="nav-link {{Route::currentRouteName() === 'admin.dashboard' ? 'active' : ''}}"
+                                        href="{{route('admin.dashboard')}}">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{route('admin.posts.index')}}">Posts</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Users</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Categories</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Tags</a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="col-sm-9">
+                        @yield('content')
+                    </div>
+
+                </div>
+            </div>
         </main>
     </div>
 </body>

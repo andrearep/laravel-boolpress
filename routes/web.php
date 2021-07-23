@@ -12,19 +12,24 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/* guset */
-Route::get('/', function () {
-    return view('guest.welcome');
-});
 
-Route::resource('posts', PostController::class)->only('index', 'show');
 
-Auth::routes(); 
+/* Altre Pagine non connesse ad un entitá/modello  */
+Route::get('/', 'PageController@index')->name('home');
+Route::get('about', 'PageController@about')->name('about');
+Route::get('contacts', 'PageController@contacts')->name('contacts');
 
-/* admin */
-Route::get('/admin', 'HomeController@index')->name('home');
+/* Posts per l'utente */
+Route::get('posts', 'PostController@index')->name('posts.index');
+Route::get('posts/{post}', 'PostController@show')->name('posts.show');
 
- Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function (){
-    Route::get('/', 'HomeController@index')->name('index');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('admin')->middleware('auth')->namespace('Admin')->name('admin.')->group(function (){
+    Route::get('/', 'HomeController@index')->name('dashboard'); //admin.dashboard
     Route::resource('posts', PostController::class);
-});  
+});

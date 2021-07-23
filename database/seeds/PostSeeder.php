@@ -1,9 +1,9 @@
 <?php
 
-use App\Post;
 use Illuminate\Database\Seeder;
-
 use Faker\Generator as Faker;
+use App\Post;
+
 class PostSeeder extends Seeder
 {
     /**
@@ -13,16 +13,12 @@ class PostSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i=0; $i < 15; $i++) { 
-           $post = new Post();
-           $post->title = $faker->sentence(5);
-           $post->subTitle = $faker->sentence(12);
-           $post->body = $faker->paragraph(7);
-           $post->argument = $faker->randomElement(['Economia', 'Salute', 'Attutalità', 'Politica']);
-           $post->author = $faker->userName();
-            $post->img = $faker->imageUrl(640, 480, 'Post', true, $post->title);
+        for ($i=0; $i < 10 ; $i++) { 
+            $post= new Post();
+            $post->title = $faker->sentence(3);
+            $post->body = $faker->text();
+            $post->image = $faker->imageUrl(600,300,'Posts', true, $post->title);
             $post->save();
-
         }
     }
 }

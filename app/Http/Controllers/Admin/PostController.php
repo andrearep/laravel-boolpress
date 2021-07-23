@@ -19,7 +19,6 @@ class PostController extends Controller
         return view('admin.posts.index', compact('posts'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -38,7 +37,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ddd($request->all());
+        $validatedData = $request->validate([
+            'title' => 'required | min:5 | max:255',
+            'image' => 'nullable | max:255',
+            'title' => 'nullable'
+        ]);
+        Post::create($validatedData);
+        return redirect()->back();
     }
 
     /**
@@ -49,7 +55,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -60,7 +66,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -72,7 +78,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required | min:5 | max:255',
+            'image' => 'nullable | max:255',
+            'title' => 'nullable'
+        ]);
+        Post::create($validatedData);
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -83,6 +95,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index');
     }
 }
