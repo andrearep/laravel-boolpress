@@ -20,7 +20,7 @@
             @foreach($posts as $post)
         <tr>
             <td scope="row">{{$post->id}}</td>
-            <td> <img src="{{$post->image}}" alt=""></td>
+            <td> <img width="100" src="{{asset('storage/' . $post->image)}}" alt=""></td>
             <td> {{$post->title}}</td>
             <td>
                 <a href="{{route('admin.posts.show', $post->id)}}">
@@ -30,7 +30,7 @@
                     EDIT
                 </a>
 
-                <form action="{{route('admin.posts.destroy', $post->id) }}" mwthod="post">
+                <form action="{{route('admin.posts.destroy', $post->id) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">DELETE</button>

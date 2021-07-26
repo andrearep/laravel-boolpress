@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -37,12 +38,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        ddd($request->all());
+       
         $validatedData = $request->validate([
             'title' => 'required | min:5 | max:255',
-            'image' => 'nullable | max:255',
-            'title' => 'nullable'
+            'image' => 'nullable | max:100',
+            'body' => 'nullable'
         ]);
+       
+        $file_path = Storage::put('post_images', $validatedData['image']);
+        $validatedData['image'] = $file_path;
+        
         Post::create($validatedData);
         return redirect()->back();
     }
