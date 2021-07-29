@@ -23,6 +23,25 @@
     <div class="alert alert-danger">{{$message}}</div>
     @enderror
 
+    <div class="alert alert-danger">{{$message}}</div>
+    @enderror
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <select multiple name="tags[]" id="tags">
+            <option value="">
+                @if($tags)
+                @foreach($tags as $tag)
+            <option value="{{$tag->id}}" {{ $post->tags->contain($tag) ? 'selected' : ''}}>
+                {{$tag->name}}
+            </option>
+            @endforeach
+            @endif
+
+            </option>
+        </select>
+        <small id="helpId" class="text-muted">Help text</small>
+    </div>
+
 
 
     <div class="form-group">

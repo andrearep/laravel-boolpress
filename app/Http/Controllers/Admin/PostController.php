@@ -78,7 +78,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $tags= Tag::all();
+        return view('admin.posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -93,7 +94,8 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required | min:5 | max:255',
             'image' => 'nullable | max:100',
-            'title' => 'nullable'
+            'title' => 'nullable',
+            'tags' => 'nullable | exists:tags.id'
         ]);
 
         if(array_key_exists('image', $validatedData)){
@@ -102,6 +104,7 @@ class PostController extends Controller
         }
 
         Post::create($validatedData);
+        $post->tags()->attach($request->tags);
         return redirect()->route('admin.posts.index');
     }
 
