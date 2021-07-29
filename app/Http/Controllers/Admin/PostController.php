@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,7 +28,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $tags= Tag::all();
+        return view('admin.posts.create', compact('tags'));
     }
 
     /**
@@ -42,7 +44,8 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => 'required | min:5 | max:255',
             'image' => 'nullable | max:100',
-            'body' => 'nullable'
+            'body' => 'nullable',
+            'tags' => 'nullable | exists:tags.id'
         ]);
        
         
@@ -51,7 +54,8 @@ class PostController extends Controller
         $validatedData['image'] = $file_path;
         }
         
-        Post::create($validatedData);
+        $post = Post::create($validatedData);
+        $post->tags()->attach($request->tags);
         return redirect()->back();
     }
 
